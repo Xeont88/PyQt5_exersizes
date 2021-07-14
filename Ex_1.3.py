@@ -1,3 +1,5 @@
+# Quit Button
+
 import sys
 from PyQt5.QtWidgets import QWidget, QPushButton, QApplication
 from PyQt5.QtCore import QCoreApplication       # Нам необходим объект из модуля QtCore.

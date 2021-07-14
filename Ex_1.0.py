@@ -1,3 +1,5 @@
+# window
+
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 
@@ -9,4 +11,4 @@ if __name__ == '__main__':
     w.setWindowTitle("Simple Huimple")  # Название экрана
     w.show()                            # отображает виджет на экране
 
-    sys.exit(app.exec_())               # 
+    sys.exit(app.exec_())               #
