@@ -25,12 +25,31 @@ class Example(QWidget):
         self.show()
 
     def showDialog(self):
-        # вывод 
+        # вывод
         col = QColorDialog.getColor()
         # вывод значений цветов rgb, 0-255
         print(int(col.name()[1:3],16), int(col.name()[3:5],16), int(col.name()[5:7],16))
         if col.isValid():
             self.frm.setStyleSheet('QWidget { background-color: %s }' % col.name())
+
+    # Позаимствованно из примера 6.2(switch)
+    def setColor(self, pressed):
+        source = self.sender()
+
+        if pressed:
+            val = 255
+        else:
+            val = 0
+
+        if source.text() == "Red":
+            self.col.setRed(val)
+        elif source.text() == "Green":
+            self.col.setGreen(val)
+        else:
+            self.col.setBlue(val)
+
+        self.square.setStyleSheet("QFrame { background-color: %s }" %
+                                  self.col.name())
 
 
 if __name__ == '__main__':
