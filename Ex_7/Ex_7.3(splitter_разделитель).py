@@ -1,6 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QFrame, QSplitter, QStyle, QApplication
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QFrame, QSplitter, QStyle, QApplication, QLabel
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
 
 
 class Example(QWidget):
