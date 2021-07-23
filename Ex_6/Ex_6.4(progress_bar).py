@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QWidget, QProgressBar, QPushButton, QApplication
 from PyQt5.QtCore import QBasicTimer
+import time
 
 
 class Example(QWidget):
@@ -31,7 +32,10 @@ class Example(QWidget):
         if self.step >= 100:
             self.timer.stop()
             self.btn.setText('Finished')
+            print(time.asctime())
             return
+        if self.step == 0:
+            print(time.asctime())
         self.step = self.step + 1
         self.pBar.setValue(self.step)
 
