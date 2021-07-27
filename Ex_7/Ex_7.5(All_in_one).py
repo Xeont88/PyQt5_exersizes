@@ -1,5 +1,6 @@
 import sys
-from PyQt5.QtWidgets import (QWidget, QCalendarWidget, QComboBox, QLabel, QSplitter, QStyle,QHBoxLayout, QLineEdit, QApplication, QFrame)
+from PyQt5.QtWidgets import (QWidget, QCalendarWidget, QComboBox, QLabel, QSplitter, QStyle,
+                             QHBoxLayout, QLineEdit, QApplication, QFrame, QLCDNumber)
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import QPixmap
 
@@ -36,6 +37,7 @@ class Example(QWidget):
         pixmap_box.addWidget(lbl)
         topLeft.setLayout(pixmap_box)
 
+        '''
         # comboBox
         a=[]
         for s in range(10):
@@ -50,21 +52,31 @@ class Example(QWidget):
         self.line_edit = QLineEdit(self)
         self.combo_box.activated[str].connect(self.onActivatedCombobox)
         combox_hbox.addWidget(self.line_edit)
+        '''
+
+        # QLCDNumber
+        self.lcd = QLCDNumber(self)
+        combox_hbox = QHBoxLayout(self)
+        combox_hbox.addWidget(self.lcd)
+        topRight.setLayout(combox_hbox)
 
         # Calendar Widget
-        calendar = QCalendarWidget(self)
-        calendar.setGridVisible(True)
-        calendar.resize(200, 150)
+        self.calendar = QCalendarWidget(self)
+        self.calendar.setGridVisible(True)
+        self.calendar.resize(200, 150)
         calend_box = QHBoxLayout(self)
-        calend_box.addWidget(calendar)
+        calend_box.addWidget(self.calendar)
         bottom.setLayout(calend_box)
-
+        self.calendar.clicked[QDate].connect(self.calendPrint)
 
         # window settings
         self.setGeometry(300, 300, 500, 350)
         self.setWindowTitle('Exersize 7. All in one')
         self.show()
 
+    def calendPrint(self, date):
+        print(str(date)[19: -1])
+        self.lcd.display(str(date)[19: -1])
 
     def onActivatedCombobox(self, text):
         self.line_edit.setText(text)
