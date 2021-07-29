@@ -37,6 +37,8 @@ class Board(QFrame):
     BoardHeight = 22
     Speed = 300
 
+    first_lap = True
+
     def __init__(self, parent):
         super().__init__(parent)
         self.initBoard()
@@ -79,6 +81,7 @@ class Board(QFrame):
         self.msg2Statusbar.emit(str(self.numLinesRemoved))
 
         self.newPiece()
+        # self.nextPiece()
         self.timer.start(Board.Speed, self)
 
     def pause(self):
@@ -193,7 +196,7 @@ class Board(QFrame):
             for j in range(Board.BoardWidth):
                 if not self.shapeAt(j, i) == Tetrominoe.NoShape:
                     n += 1
-            if n == 10:
+            if n == Board.BoardWidth:
                 rowsToRemove.append(i)
 
         rowsToRemove.reverse()
@@ -213,9 +216,19 @@ class Board(QFrame):
             self.curPiece.setShape(Tetrominoe.NoShape)
             self.update()
 
+    def nextPiece(self):
+        self.next_piece = Shape()
+        self.next_piece.setRandomShape()
+        self.nextX = 0
+        self.nextY = Board.BoardHeight - 1 + self.next_piece.minY()
+
     def newPiece(self):
-        self.curPiece = Shape()
-        self.curPiece.setRandomShape()
+        if self.first_lap:
+            self.curPiece = Shape()
+            self.curPiece.setRandomShape()
+            self.first_lap = False
+        else:
+            self.curPiece = self.next_piece
         self.curX = Board.BoardWidth // 2 + 1
         self.curY = Board.BoardHeight - 1 + self.curPiece.minY()
 
@@ -224,6 +237,8 @@ class Board(QFrame):
             self.timer.stop()
             self.isStarted = False
             self.msg2Statusbar.emit(str(self.numLinesRemoved)+"  Game Over")
+
+        self.nextPiece()
 
     def tryMove(self, newPiece, newX, newY):
         for i in range(4):
